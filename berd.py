@@ -18,7 +18,6 @@
 
 import json
 import urllib2, urllib
-import oauth
 
 _base_url = 'http://twitter.com/'
 
@@ -77,10 +76,10 @@ class Twitter():
         #NOTE: Need a smarter way to deal with authentication errors AND non-authentication errors. Perhaps an Error class?
         url = _base_url + method + '.json'
         if input_data == None:
+            full_url = url
+        else:
             input_data = urllib.urlencode(input_data)
             full_url = "?".join((url, input_data))
-        else:
-            full_url = url
             
         try:
             http_data = self._opener.open(full_url)
@@ -93,6 +92,7 @@ class Twitter():
                 print "401: Invalid Username or Password"
                 print "Some Twitter methods require valid login first"
             else:
+                print full_url
                 raise e
             return False
         else:
