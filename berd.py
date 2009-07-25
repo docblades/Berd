@@ -57,7 +57,7 @@ class Twitter():
         try:
             data = self._opener.open(_base_url + 'account/verify_credentials.json')
         except urllib2.HTTPError, e:
-            if e.getcode == 401:
+            if e.getcode() == 401:
                 print "401: Invalid Username or Password"
             self._opener = urllib2.build_opener()
             self.authenticated = False
@@ -383,7 +383,7 @@ class Twitter():
                 self.__get_data('blocks/exists/%s' % id)
                 )
         except urllib2.HTTPError, e:
-            if e.getcode == 404:
+            if e.getcode() == 404:
                 return False
 
     def block_list(self, page = 1):
